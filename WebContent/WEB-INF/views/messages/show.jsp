@@ -1,6 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%-- 詳細画面を表示する画面 --%>
+<%-- <c:import> を使うことで、url 属性に指定したファイルの内容をその位置で読み込むことが可能 --%>
+<%-- <fmt:formatDate> タグで作成日時や更新日時を pattern 属性で指定した 年-月-日 時:分:秒 の形式で表示 --%>
 <c:import url="../layout/app.jsp">
     <c:param name="content">
         <c:choose>
@@ -15,6 +18,7 @@
                         </tr>
                         <tr>
                             <th>作成日時</th>
+                            <%-- <fmt:formatDate> タグで作成日時や更新日時を pattern 属性で指定した 年-月-日 時:分:秒 の形式で表示 --%>
                             <td><fmt:formatDate value="${message.created_at}" pattern="yyyy-MM-dd HH:mm:ss" /></td>
                         </tr>
                         <tr>

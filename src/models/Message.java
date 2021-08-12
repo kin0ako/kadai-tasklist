@@ -12,11 +12,14 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
 @Entity
+//複数のNamedQueryをまとめたもので、NamedQueryをカンマで区切り指定
 @NamedQueries({
+    //主キー以外の項目などで検索し、複数件の結果を取得したい場合に定義する
     @NamedQuery(
-        name = "getAllMessages",
-        query = "SELECT m FROM Message AS m ORDER BY m.id DESC"
+            name = "getAllMessages",
+            query = "SELECT m FROM Message AS m ORDER BY m.id DESC"
             ),
+    //ページネーション使用のために「データベースにメッセージのデータが何件入っているか」を知るためのJPQL
     @NamedQuery(
             name = "getMessagesCount",
             query = "SELECT COUNT(m) FROM Message AS m"
@@ -26,15 +29,19 @@ import javax.persistence.Table;
 public class Message {
     @Id
     @Column(name = "id")
+    //主キー値を自動採番すること
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
+    // ( ..., nullable = false) で、必須入力が設定
     @Column(name = "content", length = 255, nullable = false)
     private String content;
 
+    //作成日時
     @Column(name = "created_at", nullable = false)
     private Timestamp created_at;
 
+    //更新日時
     @Column(name = "updated_at", nullable = false)
     private Timestamp updated_at;
 

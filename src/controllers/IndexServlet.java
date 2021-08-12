@@ -18,6 +18,7 @@ import utils.DBUtil;
  * Servlet implementation class IndexServlet
  */
 @WebServlet("/index")
+//データベースから複数のタスク情報を取得して一覧表示
 public class IndexServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -32,6 +33,7 @@ public class IndexServlet extends HttpServlet {
     /**
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
+    //データベースから取得したメッセージ一覧（messages）をリクエストスコープにセットし、index.jsp を呼び出し
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         EntityManager em = DBUtil.createEntityManager();
 
@@ -43,12 +45,15 @@ public class IndexServlet extends HttpServlet {
 
         // 最大件数と開始位置を指定してメッセージを取得
         List<Message> messages = em.createNamedQuery("getAllMessages", Message.class)
+                                   //何件目からデータを取得するか（配列と同じ0番目から数えていきます）
                                    .setFirstResult(5 * (page - 1))
+                                   //データの最大取得件数（今回は5件で固定）
                                    .setMaxResults(5)
                                    .getResultList();
 
         // 全件数を取得
         long messages_count = (long)em.createNamedQuery("getMessagesCount", Long.class)
+                                      //“1件だけ取得する” という命令を指定
                                       .getSingleResult();
 
         em.close();

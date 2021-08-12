@@ -17,6 +17,7 @@ import utils.DBUtil;
  * Servlet implementation class ShowServlet
  */
 @WebServlet("/show")
+//詳細情報を表示
 public class ShowServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -35,6 +36,7 @@ public class ShowServlet extends HttpServlet {
         EntityManager em = DBUtil.createEntityManager();
 
         // 該当のIDのメッセージ1件のみをデータベースから取得
+        //Interger.parseInt() メソッドを利用してString型の”1”を整数値の1に変換
         Message m = em.find(Message.class, Integer.parseInt(request.getParameter("id")));
 
         em.close();

@@ -15,6 +15,7 @@ import models.Message;
  * Servlet implementation class NewServlet
  */
 @WebServlet("/new")
+//新規登録処理
 public class NewServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -30,7 +31,7 @@ public class NewServlet extends HttpServlet {
      * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
      */
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-     // CSRF対策
+        // CSRF対策（セキュリティへの脅威に対する対策でフォームから hidden 要素で送られた値とセッションに格納された値が同一であれば送信を受け付けるようにする）
         request.setAttribute("_token", request.getSession().getId());
 
         // おまじないとしてのインスタンスを生成

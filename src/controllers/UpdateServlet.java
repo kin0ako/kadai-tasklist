@@ -20,6 +20,7 @@ import utils.DBUtil;
  * Servlet implementation class UpdateServlet
  */
 @WebServlet("/update")
+//更新処理
 public class UpdateServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -50,7 +51,7 @@ public class UpdateServlet extends HttpServlet {
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
             m.setUpdated_at(currentTime);       // 更新日時のみ上書き
 
-         // バリデーションを実行してエラーがあったら編集画面のフォームに戻る
+            // バリデーションを実行してエラーがあったら編集画面のフォームに戻る
             List<String> errors = MessageValidator.validate(m);
             if(errors.size() > 0) {
                 em.close();

@@ -20,6 +20,7 @@ import utils.DBUtil;
  * Servlet implementation class CreateServlet
  */
 @WebServlet("/create")
+//挿入処理
 public class CreateServlet extends HttpServlet {
     private static final long serialVersionUID = 1L;
 
@@ -36,6 +37,7 @@ public class CreateServlet extends HttpServlet {
      */
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String _token = request.getParameter("_token");
+        //CSRF対策のチェック（悪意のあるネット利用者が勝手に投稿できないようにするための対策）
         if(_token != null && _token.equals(request.getSession().getId())) {
             EntityManager em = DBUtil.createEntityManager();
             em.getTransaction().begin();
@@ -43,13 +45,15 @@ public class CreateServlet extends HttpServlet {
             Message m = new Message();
 
             String content = request.getParameter("content");
+           //フォームから入力された内容をセット
             m.setContent(content);
 
+            //現在日時の情報を持つ日付型のオブジェクトを取得してセット
             Timestamp currentTime = new Timestamp(System.currentTimeMillis());
             m.setCreated_at(currentTime);
             m.setUpdated_at(currentTime);
 
-         // バリデーションを実行してエラーがあったら新規登録のフォームに戻る
+            // バリデーションを実行してエラーがあったら新規登録のフォームに戻る
             List<String> errors = MessageValidator.validate(m);
             if(errors.size() > 0) {
                 em.close();
